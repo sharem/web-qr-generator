@@ -4,6 +4,8 @@
 
 import { ELEMENTS } from './config.js';
 import { qrManager } from './qr-manager.js';
+import { themeManager } from './theme.js';
+import { suggestionsManager } from './suggestions.js';
 import { clearMessages, clearQROutput, debouncedClearQROutput } from './ui-utils.js';
 
 /**
@@ -11,6 +13,12 @@ import { clearMessages, clearQROutput, debouncedClearQROutput } from './ui-utils
  */
 export function setupEventListeners() {
     const qrcodeInput = ELEMENTS.qrcodeInput;
+
+    // Button handlers (no inline onclick, so the CSP can forbid inline scripts)
+    ELEMENTS.themeToggle.addEventListener('click', () => themeManager.toggle());
+    ELEMENTS.generateBtn.addEventListener('click', () => qrManager.generate());
+    ELEMENTS.downloadBtn.addEventListener('click', () => qrManager.download());
+    ELEMENTS.expandableHeader.addEventListener('click', () => suggestionsManager.toggle());
     
     // Add enter key support for input
     qrcodeInput.addEventListener('keypress', function(e) {

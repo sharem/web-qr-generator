@@ -18,7 +18,11 @@ export function showMessage(message, type = 'success', animated = true) {
         messageDiv.className = `${type}-message fade-in`;
         
         const icon = type === 'success' ? 'check-circle' : 'exclamation-triangle';
-        messageDiv.innerHTML = `<i class="fas fa-${icon}" aria-hidden="true"></i> ${message}`;
+        const iconElement = document.createElement('i');
+        iconElement.className = `fas fa-${icon}`;
+        iconElement.setAttribute('aria-hidden', 'true');
+        // textContent, never innerHTML: messages may contain user or server input
+        messageDiv.append(iconElement, ` ${message}`);
         
         messageContainer.appendChild(messageDiv);
     };

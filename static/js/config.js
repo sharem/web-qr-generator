@@ -95,6 +95,12 @@ export const ELEMENTS = (() => {
             }
             return cache.get('themeIcon');
         },
+        get themeToggle() {
+            if (!cache.has('themeToggle')) {
+                cache.set('themeToggle', document.querySelector('.theme-toggle'));
+            }
+            return cache.get('themeToggle');
+        },
         get suggestionsContent() {
             if (!cache.has('suggestionsContent')) {
                 cache.set('suggestionsContent', document.getElementById('suggestions-content'));

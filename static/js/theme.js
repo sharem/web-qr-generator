@@ -41,5 +41,3 @@ class ThemeManager {
 }
 
 export const themeManager = new ThemeManager();
-
-window.toggleTheme = () => themeManager.toggle();
