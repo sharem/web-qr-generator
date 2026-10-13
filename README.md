@@ -54,6 +54,9 @@ Open [http://localhost:5000](http://localhost:5000) in your browser.
 ### Running Tests
 
 ```bash
+# Install development dependencies (pytest, ruff, bandit, pip-audit)
+pip install -r requirements-dev.txt
+
 # Run all tests
 pytest
 
@@ -69,6 +72,18 @@ pytest test_app.py::TestApp -v
 # Run with detailed output
 pytest -v --tb=long
 ```
+
+### Lint and Security Checks
+
+These run in CI on every pull request:
+
+```bash
+ruff check .                              # Lint
+bandit -q -r . -x ./test_app.py           # Static security analysis
+pip-audit -r requirements.txt             # Known vulnerabilities in dependencies
+```
+
+Optionally, install the git hooks with `pre-commit install` to run ruff, bandit and gitleaks before each commit.
 
 ### Test Coverage
 
@@ -99,17 +114,19 @@ View the coverage report by opening `htmlcov/index.html` after running tests wit
 web-qr-generator/
 ├── app.py                 # Flask application
 ├── test_app.py           # Test suite
-├── requirements.txt      # Dependencies
+├── requirements.txt      # Production dependencies
+├── requirements-dev.txt  # Development dependencies
 ├── pytest.ini           # Pytest configuration
 ├── static/              # CSS, JS, favicons
 └── templates/           # HTML templates
 ```
 
 ### Tech Stack
-- **Backend**: Python 3.10+, Flask 3.1.2
+- **Backend**: Python 3.10+, Flask 3.1.3
 - **Frontend**: HTML5, CSS3, Vanilla JavaScript
 - **QR Generation**: qrcode library (SVG output)
-- **Testing**: pytest, pytest-cov, pytest-mock
+- **Testing**: pytest, pytest-cov
+- **Quality & Security**: ruff, bandit, pip-audit
 
 ### Python Version Support
 | Version | Status | Notes |
@@ -127,8 +144,8 @@ web-qr-generator/
 ### Development Setup
 ```bash
 # Clone and install (see Quick Start)
-# Debug mode is enabled by default in app.py
-python app.py  # Server auto-reloads on changes
+# Debug mode is disabled by default; enable it only for local development
+FLASK_DEBUG=1 python app.py  # Server auto-reloads on changes
 ```
 
 ## Configuration

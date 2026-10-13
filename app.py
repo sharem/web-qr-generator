@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 import qrcode
 import qrcode.image.svg
 import logging
+import os
 import sys
 
 app = Flask(__name__)
@@ -70,4 +71,5 @@ def internal_error(error):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    # Never enable debug in production: the Werkzeug debugger allows arbitrary code execution
+    app.run(debug=os.environ.get("FLASK_DEBUG") == "1", port=5000)
