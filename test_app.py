@@ -2,7 +2,13 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from app import app, generate_QR
+from app import app, generate_QR, limiter
+
+
+@pytest.fixture(autouse=True)
+def reset_rate_limits():
+    """Start every test with a clean rate limit counter"""
+    limiter.reset()
 
 
 class TestApp:
@@ -247,6 +253,25 @@ class TestIntegration:
                 f"Status code mismatch for {case['description']}"
             assert case['expected_content'] in response.data, \
                 f"Content mismatch for {case['description']}"
+
+    def test_security_headers(self, client):
+        """Test security headers are set on every response"""
+        response = client.get('/')
+        csp = response.headers['Content-Security-Policy']
+        assert "script-src 'self'" in csp
+        assert "frame-ancestors 'none'" in csp
+        assert "'unsafe-inline'" not in csp
+        assert response.headers['X-Content-Type-Options'] == 'nosniff'
+        assert response.headers['X-Frame-Options'] == 'DENY'
+        assert response.headers['Referrer-Policy'] == 'strict-origin-when-cross-origin'
+
+    def test_generate_rate_limited(self, client):
+        """Test /generate rejects clients exceeding the rate limit"""
+        for _ in range(30):
+            assert client.post('/generate', data={'text': 'hi'}).status_code == 200
+        response = client.post('/generate', data={'text': 'hi'})
+        assert response.status_code == 429
+        assert b'Too many requests' in response.data
 
 
 if __name__ == '__main__':

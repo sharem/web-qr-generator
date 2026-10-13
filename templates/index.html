@@ -16,7 +16,7 @@
     
     <!-- Fonts and external resources -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer">
     
     <!-- Custom styles -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
@@ -24,7 +24,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle between light and dark theme">
+            <button class="theme-toggle" title="Toggle theme" aria-label="Toggle between light and dark theme">
                 <i class="fas fa-moon" id="theme-icon" aria-hidden="true"></i>
             </button>
             <h1>QR Generator</h1>
@@ -50,11 +50,11 @@
                 </div>
                 <div id="input-help" class="sr-only">Enter the text or URL you want to convert to a QR code. Maximum 500 characters.</div>
                 <div class="button-group">
-                    <button class="btn btn-primary" onclick="generateQRCode()" id="generate-btn" aria-describedby="generate-help">
+                    <button class="btn btn-primary" id="generate-btn" aria-describedby="generate-help">
                         <i class="fas fa-magic" aria-hidden="true"></i>
                         <span>Generate QR Code</span>
                     </button>
-                    <button class="btn btn-secondary hidden" onclick="downloadQRCode()" id="download-btn" aria-label="Download generated QR code as SVG file">
+                    <button class="btn btn-secondary hidden" id="download-btn" aria-label="Download generated QR code as SVG file">
                         <i class="fas fa-download" aria-hidden="true"></i>
                         <span>Download</span>
                     </button>
@@ -63,7 +63,7 @@
             </div>
 
             <div class="suggestions-section">
-                <button class="expandable-header" onclick="toggleSuggestions()" aria-expanded="false" aria-controls="suggestions-content" aria-label="Toggle quick examples section">
+                <button class="expandable-header" aria-expanded="false" aria-controls="suggestions-content" aria-label="Toggle quick examples section">
                     <span><i class="fas fa-lightbulb" aria-hidden="true"></i> Quick Examples</span>
                     <i class="fas fa-chevron-down expand-icon" id="expand-icon" aria-hidden="true"></i>
                 </button>

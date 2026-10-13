@@ -42,10 +42,12 @@ class SuggestionsManager {
             suggestionButton.className = 'suggestion-item';
             suggestionButton.type = 'button';
             suggestionButton.setAttribute('aria-label', `Use ${suggestion.label} as QR code content`);
-            suggestionButton.innerHTML = `
-                <i class="${suggestion.icon}" aria-hidden="true"></i>
-                <span>${suggestion.label}</span>
-            `;
+            const icon = document.createElement('i');
+            icon.className = suggestion.icon;
+            icon.setAttribute('aria-hidden', 'true');
+            const label = document.createElement('span');
+            label.textContent = suggestion.label;
+            suggestionButton.append(icon, label);
             
             // Add click event listener
             suggestionButton.addEventListener('click', () => this.addSuggestion(suggestion.text));
@@ -72,5 +74,3 @@ class SuggestionsManager {
 }
 
 export const suggestionsManager = new SuggestionsManager();
-
-window.toggleSuggestions = () => suggestionsManager.toggle();

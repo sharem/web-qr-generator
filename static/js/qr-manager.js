@@ -164,7 +164,3 @@ class QRManager {
 }
 
 export const qrManager = new QRManager();
-
-// Global functions for HTML onclick
-window.generateQRCode = () => qrManager.generate();
-window.downloadQRCode = () => qrManager.download();
